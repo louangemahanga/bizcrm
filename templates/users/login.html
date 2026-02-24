@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block auth_content %}
+<div class="min-vh-100 d-flex align-items-center justify-content-center"
+     style="background: linear-gradient(135deg, #1a1a2e, #16213e);">
+  <div class="card p-4" style="width: 380px;">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold"><i class="bi bi-briefcase-fill text-primary"></i> BizCRM</h2>
+      <p class="text-muted">Connectez-vous à votre espace</p>
+    </div>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-danger">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Nom d'utilisateur</label>
+        <input type="text" name="username" class="form-control form-control-lg"
+               placeholder="Votre username" required autofocus/>
+      </div>
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Mot de passe</label>
+        <input type="password" name="password" class="form-control form-control-lg"
+               placeholder="••••••••" required/>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg w-100">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Se connecter
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}

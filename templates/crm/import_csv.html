@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}— Import CSV{% endblock %}
+{% block page_title %}Importer des prospects{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+
+  <!-- Formulaire upload -->
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h6 class="fw-bold mb-3"><i class="bi bi-upload text-primary me-1"></i>Importer un fichier CSV</h6>
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Sélectionner le fichier CSV</label>
+          <input type="file" name="fichier_csv" class="form-control" accept=".csv" required/>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="bi bi-cloud-upload me-1"></i>Importer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Instructions -->
+  <div class="col-md-6">
+    <div class="card p-4">
+      <h6 class="fw-bold mb-3"><i class="bi bi-info-circle text-info me-1"></i>Format attendu</h6>
+      <p class="text-muted small">Ton fichier CSV doit avoir ces colonnes (la première ligne = entêtes) :</p>
+      <table class="table table-sm table-bordered small">
+        <thead class="table-light">
+          <tr><th>Colonne</th><th>Obligatoire</th><th>Exemple</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>nom_entreprise</td><td><span class="badge bg-danger">Oui</span></td><td>Acme Corp</td></tr>
+          <tr><td>email</td><td><span class="badge bg-secondary">Non</span></td><td>contact@acme.com</td></tr>
+          <tr><td>telephone</td><td><span class="badge bg-secondary">Non</span></td><td>+242 06 000 0000</td></tr>
+          <tr><td>ville</td><td><span class="badge bg-secondary">Non</span></td><td>Brazzaville</td></tr>
+          <tr><td>adresse</td><td><span class="badge bg-secondary">Non</span></td><td>Avenue Foch</td></tr>
+          <tr><td>secteur</td><td><span class="badge bg-secondary">Non</span></td><td>commerce</td></tr>
+          <tr><td>statut</td><td><span class="badge bg-secondary">Non</span></td><td>nouveau</td></tr>
+          <tr><td>notes</td><td><span class="badge bg-secondary">Non</span></td><td>RDV prévu</td></tr>
+        </tbody>
+      </table>
+      <p class="text-muted small mt-2">
+        Valeurs valides pour <strong>secteur</strong> :
+        commerce, industrie, services, tech, sante, education, autre<br>
+        Valeurs valides pour <strong>statut</strong> :
+        nouveau, contacte, interesse, negocia, client, perdu
+      </p>
+
+      <!-- Bouton télécharger modèle -->
+      <a href="{% url 'crm:telecharger_modele_csv' %}" class="btn btn-outline-success btn-sm mt-2">
+        <i class="bi bi-download me-1"></i>Télécharger un modèle CSV
+      </a>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; margin:0; padding:0; }
+    .container { max-width:600px; margin:40px auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    .header { background:linear-gradient(135deg,#fd7e14,#dc6c0a); padding:30px; text-align:center; }
+    .header h1 { color:#fff; margin:0; font-size:1.8rem; }
+    .header p  { color:rgba(255,255,255,0.8); margin:5px 0 0; }
+    .body { padding:30px; }
+    .body h2 { color:#1a1a2e; }
+    .body p  { color:#555; line-height:1.6; }
+    .message-box { background:#fff8f0; border-left:4px solid #fd7e14; padding:15px 20px; border-radius:0 8px 8px 0; margin:20px 0; color:#333; }
+    .footer { background:#f4f6f9; padding:20px; text-align:center; color:#aaa; font-size:0.8rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🔔 Relance Commerciale</h1>
+      <p>BizCRM — Suivi prospect</p>
+    </div>
+    <div class="body">
+      <h2>Bonjour {{ prospect.nom_entreprise }} 👋</h2>
+      <p>Nous revenons vers vous suite à notre précédent échange.</p>
+      {% if message_perso %}
+      <div class="message-box">{{ message_perso }}</div>
+      {% endif %}
+      <p>N'hésitez pas à nous contacter pour toute question.</p>
+      <p>Cordialement,<br/><strong>L'équipe BizCRM</strong></p>
+    </div>
+    <div class="footer">© 2025 BizCRM — Tous droits réservés</div>
+  </div>
+</body>
+</html>

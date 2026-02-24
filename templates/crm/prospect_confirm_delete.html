@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}— Supprimer{% endblock %}
+{% block page_title %}Supprimer un prospect{% endblock %}
+
+{% block content %}
+<div class="card p-4" style="max-width:500px; margin:auto;">
+  <div class="text-center mb-4">
+    <i class="bi bi-exclamation-triangle-fill text-danger" style="font-size:3rem;"></i>
+    <h5 class="mt-3">Confirmer la suppression</h5>
+    <p class="text-muted">
+      Voulez-vous vraiment supprimer <strong>{{ prospect.nom_entreprise }}</strong> ?
+      Cette action est irréversible.
+    </p>
+  </div>
+  <form method="post" class="d-flex gap-2 justify-content-center">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">
+      <i class="bi bi-trash me-1"></i>Oui, supprimer
+    </button>
+    <a href="{% url 'crm:prospect_list' %}" class="btn btn-outline-secondary">Annuler</a>
+  </form>
+</div>
+{% endblock %}

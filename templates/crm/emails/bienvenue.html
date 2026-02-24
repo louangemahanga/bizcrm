@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8"/>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f6f9; margin:0; padding:0; }
+    .container { max-width:600px; margin:40px auto; background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.1); }
+    .header { background:linear-gradient(135deg,#1a1a2e,#16213e); padding:30px; text-align:center; }
+    .header h1 { color:#fff; margin:0; font-size:1.8rem; }
+    .header p  { color:rgba(255,255,255,0.7); margin:5px 0 0; }
+    .body { padding:30px; }
+    .body h2 { color:#1a1a2e; }
+    .body p  { color:#555; line-height:1.6; }
+    .badge { display:inline-block; background:#0d6efd; color:#fff; padding:4px 12px; border-radius:20px; font-size:0.85rem; }
+    .footer { background:#f4f6f9; padding:20px; text-align:center; color:#aaa; font-size:0.8rem; }
+    .btn { display:inline-block; background:#0d6efd; color:#fff; padding:12px 28px; border-radius:8px; text-decoration:none; font-weight:bold; margin-top:15px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>💼 BizCRM</h1>
+      <p>Votre partenaire commercial</p>
+    </div>
+    <div class="body">
+      <h2>Bonjour {{ prospect.nom_entreprise }} 👋</h2>
+      <p>Nous avons bien enregistré votre profil dans notre système CRM.</p>
+      <p>Voici un résumé de vos informations :</p>
+      <table style="width:100%; border-collapse:collapse; margin:15px 0;">
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:8px; color:#888;">Entreprise</td>
+          <td style="padding:8px; font-weight:bold;">{{ prospect.nom_entreprise }}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:8px; color:#888;">Ville</td>
+          <td style="padding:8px;">{{ prospect.ville|default:"—" }}</td>
+        </tr>
+        <tr style="border-bottom:1px solid #eee;">
+          <td style="padding:8px; color:#888;">Secteur</td>
+          <td style="padding:8px;">{{ prospect.get_secteur_display }}</td>
+        </tr>
+        <tr>
+          <td style="padding:8px; color:#888;">Statut</td>
+          <td style="padding:8px;"><span class="badge">{{ prospect.get_statut_display }}</span></td>
+        </tr>
+      </table>
+      <p>Un de nos commerciaux vous contactera très prochainement.</p>
+      <p>Cordialement,<br/><strong>L'équipe BizCRM</strong></p>
+    </div>
+    <div class="footer">© 2025 BizCRM — Tous droits réservés</div>
+  </div>
+</body>
+</html>

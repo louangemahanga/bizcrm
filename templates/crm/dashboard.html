@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block title %}— Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<!-- Cartes statistiques -->
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#0d6efd,#0a58ca)">
+      <div class="fs-2 fw-bold">{{ total_prospects }}</div>
+      <div><i class="bi bi-people-fill me-1"></i>Total Prospects</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#198754,#146c43)">
+      <div class="fs-2 fw-bold">{{ total_clients }}</div>
+      <div><i class="bi bi-person-check-fill me-1"></i>Clients</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#fd7e14,#dc6c0a)">
+      <div class="fs-2 fw-bold">{{ nouveaux }}</div>
+      <div><i class="bi bi-star-fill me-1"></i>Nouveaux</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="stat-card" style="background:linear-gradient(135deg,#6f42c1,#59359a)">
+      <div class="fs-2 fw-bold">{{ taux }}%</div>
+      <div><i class="bi bi-graph-up-arrow me-1"></i>Taux conversion</div>
+    </div>
+  </div>
+</div>
+
+<!-- Graphique + Derniers prospects -->
+<div class="row g-3">
+  <div class="col-md-5">
+    <div class="card p-4 h-100">
+      <h6 class="fw-bold mb-3"><i class="bi bi-pie-chart-fill text-primary me-1"></i>Prospects par statut</h6>
+      <canvas id="chartStatut"></canvas>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="card p-4 h-100">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="fw-bold mb-0"><i class="bi bi-clock-history text-primary me-1"></i>Derniers prospects</h6>
+        <a href="{% url 'crm:prospect_list' %}" class="btn btn-sm btn-outline-primary">Voir tout</a>
+      </div>
+      <table class="table table-hover table-sm">
+        <thead class="table-light">
+          <tr>
+            <th>Entreprise</th><th>Ville</th><th>Statut</th><th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+  {% for p in derniers %}
+  <tr>
+    <td>
+      <a href="{% url 'crm:prospect_detail' p.pk %}" class="text-decoration-none fw-semibold">
+        {{ p.nom_entreprise }}
+      </a>
+    </td>
+    <td>{{ p.ville|default:"—" }}</td>
+    <td>
+      <span class="badge badge-statut-{{ p.statut }}">
+        {{ p.get_statut_display }}
+      </span>
+    </td>
+    <td class="text-muted small">{{ p.date_creation|date:"d/m/Y" }}</td>
+  </tr>
+  {% empty %}
+  <tr>
+    <td colspan="4" class="text-center text-muted py-3">
+      Aucun prospect pour l'instant.
+    </td>
+  </tr>
+  {% endfor %}
+</tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Graphique Donut — Statuts
+  const donutData = {
+    labels: [{% for s in par_statut %}'{{ s.statut }}',{% endfor %}],
+    datasets: [{
+      data: [{% for s in par_statut %}{{ s.total }},{% endfor %}],
+      backgroundColor: ['#0d6efd','#6f42c1','#fd7e14','#ffc107','#198754','#dc3545'],
+      borderWidth: 0,
+    }]
+  };
+  new Chart(document.getElementById('chartStatut'), {
+    type: 'doughnut',
+    data: donutData,
+    options: {
+      cutout: '65%',
+      plugins: {
+        legend: { position: 'bottom', labels: { padding: 15 } }
+      }
+    }
+  });
+</script>
+{% endblock %}
