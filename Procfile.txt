@@ -1,2 +1,2 @@
-web: gunicorn bizcrm.wsgi --log-file -
-release: python manage.py migrate
+
+web: gunicorn bizcrm.wsgi
