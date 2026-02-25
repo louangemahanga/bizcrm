@@ -1,0 +1,8 @@
+app = "bizcrm-app"
+primary_region = "cdg"
+
+[env]
+  DEBUG = "False"
+
+[build]
+  builder = "docker"
